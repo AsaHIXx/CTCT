@@ -1,0 +1,19 @@
+
+
+
+
+pretrained_model: /disk/sdb/gxx/task/CTC/CTCT/pretrained_model/CTC_pretrained.pth
+
+input_data: /disk/sdb/gxx/task/CTC/dataset/CTC_experiments/exp_total_83_logtpm.csv
+
+input_dim: 18856
+
+embed_size: 200
+
+class_out: 26
+
+log: ./val_result/
+
+tumor_info: /disk/sdb/gxx/task/CTC/CTCT/data_examples/tumor_ident_num.txt
+
+batch_size: 32

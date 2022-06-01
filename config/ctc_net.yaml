@@ -1,0 +1,127 @@
+###reproducibility
+fix_seed: True
+### train GPU
+device: '1'
+
+
+## train info set for log
+train_info: CTC_
+
+## VAE model setting
+vaeloss: mse
+bn: True
+##model setting
+expweight: True
+optim: Adam
+embed_size: 200
+train: True
+fix_bn: True
+multi_gpu: False
+model: ctc
+init_weight: None
+pretrained: True
+extra: False
+bottleneck: False
+class_out: 26
+inputs_dim: 18856
+trainer: 'dcc'
+normalize: False
+testequaltarget: True
+### add neuron
+neuron_add: None
+### Optimizer
+lr: 0.0001
+momentum: 0.9
+onehot: False
+mask: None
+source_mask:
+  - 26
+source_sample: None
+seeds_change: 2
+target_sample_class: None
+target_sample: None
+all_sample: None
+feature_selected: None
+variance: None
+weight_decay: 0.0005
+power: 0.75
+gamma: 10
+num_steps: 8000
+stop_steps: 5001
+reproduce_iter: 0
+max_iter_num: 3000
+warmup: False
+warmup_steps: 1800
+stage_size: 200
+####dataloader
+source_sample_num: 52505
+target_sample_num: 372
+batch_size: 64
+num_pclass: 6
+num_sample: 6
+num_worker: 0
+num_classes: 26
+task: CTC
+
+### transfer info
+cls_share: 26
+cls_src: 0
+cls_total: 26
+## class balance
+
+class_balance: False
+
+### Hyper Parameter for losses
+t: 0.1
+lamb: 0.1
+gm: 3 # gamma for weight of regularizer
+prior: False
+
+### Checkpoint
+note: train
+snapshot: '/disk/sdb/gxx/task/CTC/snapshot'
+
+### Visualization
+tensorboard: True
+screen: True
+log: './log'
+
+### log output control
+val_freq: 10
+save_freq: 2000
+print_freq: 10
+dingding: False
+
+### Clustering set
+cluster: KMeans
+##### Stopping criteria for clustering searching
+k_converge: True
+interval: 5
+max_search: 5
+drop_stop: True
+drop: 4
+drop_con: True
+search_stop: True
+
+
+## data location
+source_addition: None
+source_addition_label: None
+target_addition: None
+#  - /disk/sdb/gxx/task/CTC/dataset/pbmc_logtpm_new.csv
+target_addition_label: None
+#  - 25
+experiment_addition: None
+experiment_addition_label: None
+source_data: /disk/sdb/gxx/task/CTC/dataset/SourceFeatureSelected/Source_18856_52505.npy
+source_label: /disk/sdb/gxx/task/CTC/dataset/SourceFeatureSelected/source_ident_52505.txt
+addition_source: None
+experiment_data: /disk/sdb/gxx/task/CTC/dataset/CTC_pub_train_372_exp.txt
+experiment_label: /disk/sdb/gxx/task/CTC/dataset/CTC_public_372_train_serial.txt
+target_data: /disk/sdb/gxx/task/CTC/dataset/CTC_pub_train_372_exp.txt
+target_label: /disk/sdb/gxx/task/CTC/dataset/CTC_public_372_train_serial.txt
+test_data: /disk/sdb/gxx/task/CTC/dataset/CTC_pub_train_372_exp.txt
+test_label: /disk/sdb/gxx/task/CTC/dataset/CTC_public_372_train_serial.txt
+
+symbol: ./data_examples/gene_hygo_18856.txt
+ensemble: ./data_examples/gene_ensemble_18856.txt
