@@ -1,11 +1,11 @@
 ###reproducibility
 fix_seed: True
 ### train GPU
-device: '1'
+device: '3'
 
 
 ## train info set for log
-train_info: CTC_
+train_info: CTCtransductive_
 
 ## VAE model setting
 vaeloss: mse
@@ -73,7 +73,7 @@ class_balance: False
 
 ### Hyper Parameter for losses
 t: 0.1
-lamb: 0.1
+lamb: 0.08
 gm: 3 # gamma for weight of regularizer
 prior: False
 
@@ -107,17 +107,19 @@ search_stop: True
 ## data location
 source_addition: None
 source_addition_label: None
-target_addition: None
-#  - /disk/sdb/gxx/task/CTC/dataset/pbmc_logtpm_new.csv
-target_addition_label: None
-#  - 25
+target_addition: 
+ - /disk/sdb/gxx/task/CTC/dataset/pbmc_logtpm_new.csv
+ - /disk/sdb/gxx/task/CTC/dataset/CTC_experiments/brca_nature_human_36_logtpm.csv
+target_addition_label: 
+ - 25
+ - 5
 experiment_addition: None
 experiment_addition_label: None
 source_data: /disk/sdb/gxx/task/CTC/dataset/SourceFeatureSelected/Source_18856_52505.npy
 source_label: /disk/sdb/gxx/task/CTC/dataset/SourceFeatureSelected/source_ident_52505.txt
 addition_source: None
-experiment_data: /disk/sdb/gxx/task/CTC/dataset/CTC_pub_train_372_exp.txt
-experiment_label: /disk/sdb/gxx/task/CTC/dataset/CTC_public_372_train_serial.txt
+experiment_data: /disk/sdb/gxx/task/CTC/dataset/CTC_pub_test_377_exp.txt
+experiment_label: /disk/sdb/gxx/task/CTC/dataset/CTC_public_377_test_serial.txt
 target_data: /disk/sdb/gxx/task/CTC/dataset/CTC_pub_train_372_exp.txt
 target_label: /disk/sdb/gxx/task/CTC/dataset/CTC_public_372_train_serial.txt
 test_data: /disk/sdb/gxx/task/CTC/dataset/CTC_pub_train_372_exp.txt
