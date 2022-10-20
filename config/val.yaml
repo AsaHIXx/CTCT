@@ -1,0 +1,21 @@
+
+
+
+
+pretrained_model: pretrained_model/CTC_pretrained.pth
+
+input_data: data_examples/CTC_pub_train_372_exp.txt
+
+ref_label: None
+
+input_dim: 18856
+
+embed_size: 200
+
+class_out: 26
+
+log: ./val_result/
+
+tumor_info: data_examples/tumor_ident_num.txt
+
+batch_size: 32

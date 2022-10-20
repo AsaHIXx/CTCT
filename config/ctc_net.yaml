@@ -1,0 +1,129 @@
+###reproducibility
+fix_seed: True
+### train GPU
+device: '1'
+### Clustering set
+cluster: KMeans
+##### Stopping criteria for clustering searching
+k_converge: True
+interval: 5
+max_search: 5
+drop_stop: True
+drop: 4
+drop_con: True
+search_stop: True
+balance_smote: None
+## train info set for log
+train_info: ___CTC_transductive__
+softmax_coverge: False
+## VAE model setting
+vaeloss: mse
+bn: True
+##model setting
+expweight: True
+optim: Adam
+embed_size: 200
+train: True
+fix_bn: True
+multi_gpu: False
+model: ctc
+init_weight: None
+pretrained: True
+extra: False
+bottleneck: False
+class_out: 27
+inputs_dim: 18856
+setting: pda
+transfer_all: False
+trainer: 'dcc'
+version: 1
+normalize: False
+testequaltarget: True
+### add neuron
+neuron_add: None
+### Optimizer
+lr: 0.00005
+momentum: 0.9
+onehot: False
+mask: None
+source_mask:
+  - 26
+source_sample: None
+seeds_change: None
+target_sample_class: None
+target_sample: None
+all_sample: None
+feature_selected: None
+variance: None
+weight_decay: 0.0005
+power: 0.75
+gamma: 10
+num_steps: 8000
+stop_steps: 6001
+reproduce_iter: 0
+max_iter_num: 3000
+warmup: False
+warmup_steps: 1000
+stage_size: 200
+####dataloader
+source_sample_num: 52505
+target_sample_num: 372
+batch_size: 64
+num_pclass: 6
+num_sample: 6
+num_worker: 0
+num_classes: 27
+task: CTC
+
+### transfer info
+cls_share: 27
+cls_src: 0
+cls_total: 27
+## class balance
+
+class_balance: False
+
+### Hyper Parameter for losses
+t: 0.1
+lamb: 0.1
+gm: 3 # gamma for weight of regularizer
+prior: False
+### LOSS hyperParameter
+cdd_loss: 0.1
+source_loss: 0.3
+target_loss: 0.6
+
+### Checkpoint
+note: train
+snapshot: './snapshot/batch'
+
+### Visualization
+tensorboard: True
+screen: True
+neptune: False
+log: './log'
+
+### log output control
+val_freq: 10
+save_freq: 2000
+print_freq: 10
+dingding: False
+
+
+## data location
+source_addition: None
+source_addition_label: None
+target_addition: None
+target_addition_label: None
+experiment_addition: None
+experiment_addition_label: None
+source_data: ./Source_18856_52505.npy
+source_label: ./source_ident_52505.txt
+addition_source: None
+experiment_data: ./data_examples/CTC_pub_train_372_exp.txt
+experiment_label: ./data_examples/CTC_public_372_train_serial.txt
+target_data: ./data_examples/CTC_pub_train_372_exp.txt
+target_label: ./data_examples/CTC_public_372_train_serial.txt
+test_data: ./data_examples/CTC_pub_train_372_exp.txt
+test_label: ./data_examples/CTC_public_372_train_serial.txt
+tumor_name: ./data_examples/tumor_ident_num.txt
