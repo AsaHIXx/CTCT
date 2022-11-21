@@ -1,7 +1,7 @@
 ###reproducibility
 fix_seed: True
 ### train GPU
-device: '1'
+device: '0'
 ### Clustering set
 cluster: KMeans
 ##### Stopping criteria for clustering searching
@@ -31,7 +31,7 @@ init_weight: None
 pretrained: True
 extra: False
 bottleneck: False
-class_out: 27
+class_out: 26
 inputs_dim: 18856
 setting: pda
 transfer_all: False
@@ -46,8 +46,7 @@ lr: 0.00005
 momentum: 0.9
 onehot: False
 mask: None
-source_mask:
-  - 26
+source_mask: None
 source_sample: None
 seeds_change: None
 target_sample_class: None
@@ -72,15 +71,8 @@ batch_size: 64
 num_pclass: 6
 num_sample: 6
 num_worker: 0
-num_classes: 27
+num_classes: 26
 task: CTC
-
-### transfer info
-cls_share: 27
-cls_src: 0
-cls_total: 27
-## class balance
-
 class_balance: False
 
 ### Hyper Parameter for losses
@@ -88,10 +80,6 @@ t: 0.1
 lamb: 0.1
 gm: 3 # gamma for weight of regularizer
 prior: False
-### LOSS hyperParameter
-cdd_loss: 0.1
-source_loss: 0.3
-target_loss: 0.6
 
 ### Checkpoint
 note: train
@@ -117,8 +105,8 @@ target_addition: None
 target_addition_label: None
 experiment_addition: None
 experiment_addition_label: None
-source_data: ./Source_18856_52505.npy
-source_label: ./source_ident_52505.txt
+source_data: ./sparse_50318_for_26types.npz
+source_label: ./source_50318_label.txt
 addition_source: None
 experiment_data: ./data_examples/CTC_pub_train_372_exp.txt
 experiment_label: ./data_examples/CTC_public_372_train_serial.txt

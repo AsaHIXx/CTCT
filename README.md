@@ -17,7 +17,7 @@ pip install -r requirements.txt
 
 ## DEMO
 - simple demos can be found in **./Demo.ipynb**
-- if you want to reproduce training process, you need to download the source dataset(sparse_52505.h5) from the website(`http://117.25.169.110:1032/`); and a h5 file process scripts can be found in `utils/h5_data_preprocessing.py`
+- if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`); and a h5 file process scripts can be found in `utils/h5_data_preprocessing.py`
 
 ## Data preprocessing
 
@@ -57,10 +57,13 @@ inductive prediction
 python ctc_inductive_training.py
 ```
 - return tabular prediction file at result file path(./results/<'PATH'>).
+
+## Fine-tune
+Fill the `init_weight` parameter in `config/ctc-net.yaml` and then fill the new data path. Then run `python ctc_transductive_training.py`. And a fine-tune training step starts.
 ## Visualization
 Fill the parameters in `config/vis.yaml` and just run `python Visualization.py`. You can get a low-dimension embedding of the pretrained model.
 ## Gene Marker Finder
-> Custom scripts for searching gene markers based on scanpy, see in ./utils/gene_finder{}.py
+> Custom scripts for searching gene markers based on scanpy(1.9.1), see in ./utils/gene_finder{}.py
 ## License
 This project is licensed under the MIT license.
 - - -

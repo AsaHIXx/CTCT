@@ -1,7 +1,6 @@
 import torch
 import os.path as osp
 import torch.nn as nn
-# import neptune.new as neptune
 from tqdm import tqdm
 import operator
 import math
@@ -15,7 +14,6 @@ from dataset import *
 from sklearn import metrics
 import sklearn
 from sklearn.cluster import KMeans
-# from sklearn.cluster import SpectralClustering as KMeans
 from torch.utils.tensorboard import SummaryWriter
 import torch.utils.data as Data
 from dataset import _get_dataset
@@ -77,33 +75,6 @@ class BaseTrainer(object):
         self.center_index = []
         self.target_index = []
         self.acc_dict_for_test = {}
-        #######################
-        ########数据读入########
-        #######################
-        # if self.config.normalize:
-        #     self.source_exp_data = normalize_zscore(np.loadtxt(self.config.source_data, dtype=np.float32))
-        #     self.target_exp_data = normalize_zscore(np.loadtxt(self.config.target_data, dtype=np.float32))
-        #     self.test_exp_data = normalize_zscore(np.loadtxt(self.config.test_data, dtype=np.float32))
-        #     self.experiment_data = normalize_zscore(np.loadtxt(self.config.experiment_data, dtype=np.float32))
-        # else:
-        #     if self.config.source_data.split('.')[-1] == 'npy':
-        #         self.source_exp_data = np.load(self.config.source_data)
-        #         self.source_exp_data = self.source_exp_data.astype(np.float32)
-        #     else:
-        #         self.source_exp_data = np.loadtxt(self.config.source_data, dtype=np.float32)
-        #     if self.config.target_data.split('.')[-1] == 'npy':
-        #         self.target_exp_data = np.load(self.config.target_data)
-        #         self.target_exp_data = self.target_exp_data.astype(np.float32)
-        #     else:
-        #         self.target_exp_data = np.loadtxt(self.config.target_data, dtype=np.float32)
-        #     self.test_exp_data = np.loadtxt(self.config.test_data, dtype=np.float32)
-        #     self.experiment_data = np.loadtxt(self.config.experiment_data, dtype=np.float32)
-        #     # self.experiment_data2 = np.loadtxt(self.config.experiment_data2, dtype=np.float32)
-        
-        # self.label_for_source = np.loadtxt(self.config.source_label, dtype=np.float32)
-        # self.target_label_data = np.loadtxt(self.config.target_label, dtype=np.float32)
-        # self.test_label_data = np.loadtxt(self.config.test_label, dtype=np.float32)
-        # self.experiment_label = np.loadtxt(self.config.experiment_label, dtype=np.int16)
         self.source_exp_data = tabular_read_in(self.config.source_data)
         self.target_exp_data = tabular_read_in(self.config.target_data)
         self.test_exp_data = tabular_read_in(self.config.test_data)
@@ -122,7 +93,7 @@ class BaseTrainer(object):
                                                                                self.config.all_sample,
                                                                                self.config.seeds_change)
         ###############
-        ########给source塞数据
+        ########option_source_data_addin
         ###############
         if self.config.source_addition != 'None':
             for idx in range(len(self.config.source_addition)):
@@ -150,8 +121,6 @@ class BaseTrainer(object):
                 elif self.config.target_addition[idx].split('.')[-1] == 'h5':
                     h5_transer = H5toCSV(self.config.target_addition[idx], self.symbol)
                     exp_df = h5_transer.select_gene()
-                    # exp_df = exp_df.sample(1500, axis=1, random_state=1234)
-                    # exp_df = exp_df.iloc[:, 0:1000]
                     exp_df = exp_df.values.T
                 elif self.config.target_addition[idx].split('.')[-1] == 'txt':
                     try:
@@ -165,7 +134,7 @@ class BaseTrainer(object):
                 print('after ', self.config.target_addition[idx], 'addition, shape is', self.target_exp_data.shape,
                       self.target_label_data.shape)
         ########################
-        ########增加experiment数据增加
+        ########option_data_addin
         if self.config.experiment_addition != 'None':
             for idx in range(len(self.config.experiment_addition)):
                 if self.config.experiment_addition[idx].split('.')[-1] == 'csv':
@@ -174,8 +143,6 @@ class BaseTrainer(object):
                 elif self.config.experiment_addition[idx].split('.')[-1] == 'h5':
                     h5_transer = H5toCSV(self.config.experiment_addition[idx], self.symbol)
                     exp_df = h5_transer.select_gene()
-                    # exp_df = exp_df.sample(1500, axis=1, random_state=1234)
-                    # exp_df = exp_df.iloc[:, 0:1000]
                     exp_df = exp_df.values.T
                 elif self.config.experiment_addition[idx].split('.')[-1] == 'txt':
                     try:
@@ -190,7 +157,7 @@ class BaseTrainer(object):
                       self.experiment_label.shape)
 
         #########################
-        ######添加额外数据#########
+        ######option_data_addin#########
         #########################
         if self.config.addition_source != 'None':
             self.addit_source = np.loadtxt(self.config.addition_source, dtype=np.float32)
@@ -215,7 +182,7 @@ class BaseTrainer(object):
         self.config.num_classes = len(set(self.label_for_source))
         # if self.config.target_addition != 'None':
 
-        ########## target 数据 sample
+        ########## target  sample
         if self.config.target_sample != 'None':
             self.target_exp_data, self.target_label_data = sampling_by_class(self.target_exp_data,
                                                                              self.target_label_data,
@@ -233,7 +200,7 @@ class BaseTrainer(object):
             self.test_exp_data = self.target_exp_data
         self.test_exp_data = np.append(self.test_exp_data, self.experiment_data, axis=0)
         self.test_label_data = np.append(self.test_label_data, self.experiment_label)
-        ## target 数据特征筛选
+        ## target feature selection
         if self.config.feature_selected != 'None':
             vmfs = VarianceMeanFeatureSelection(
                 path=self.config.experimentpath,
@@ -242,7 +209,7 @@ class BaseTrainer(object):
                 file_short='/*log.csv')
             self.gene_experiment, _ = vmfs.feature_selection()
         ##################################
-        ########source/target数据维度降低###
+        ########source/target dimension reduce###
         ##################################
         if self.config.variance != 'None':
             Dimension_reducer = Dimension_reduce(source_arr=self.source_exp_data, target_arr=self.target_exp_data,
@@ -251,7 +218,7 @@ class BaseTrainer(object):
             self.test_exp_data = gene_feature_selection(self.test_exp_data, self.gene_selected)
             self.experiment_data = gene_feature_selection(self.experiment_data, self.gene_selected)
         self.exp_result = self.experiment_data.shape[0]
-        ###### 输出控制
+        ###### output log
         self.config.source_sample_num = self.source_exp_data.shape[0]
         self.config.target_sample_num = self.target_exp_data.shape[0]
         self.epoch_iter = int(self.config.target_sample_num / self.config.batch_size) + 1
@@ -259,7 +226,7 @@ class BaseTrainer(object):
         self.config.val_freq = self.epoch_iter
         self.print_freq_epoch = 50
         self.config.save_freq = self.print_freq_epoch * 20
-        #########记录log
+        #########record log
         target_train_info, _ = find_duplciates1(self.target_label_data)
 
         REPORT = open(self.config.snapshot + 'Train_Result', 'a')
@@ -272,7 +239,7 @@ class BaseTrainer(object):
         REPORT.write('\n')
         REPORT.close()
         ##################################
-        ##########样本平衡采样##############
+        ##########sampler##############
         ##################################
         classes = self.label_for_source
         freq = Counter(classes)
@@ -284,7 +251,7 @@ class BaseTrainer(object):
         #     self.sampler = False
             
         #################################
-        #########数据打包##################
+        #########dataloader##################
         ##################################
         self.test_loader = get_dataset_Test(config, self.test_exp_data,
                                             self.test_label_data,
@@ -660,7 +627,7 @@ class BaseTrainer(object):
 
     def get_src_centers(self):
         self.model.eval()
-        num_cls = self.config.cls_share + self.config.cls_src
+        num_cls = self.config.class_out
 
         if self.config.model != 'res50':
             s_center = torch.zeros((num_cls, self.config.embed_size)).float().cuda()

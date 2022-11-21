@@ -6,6 +6,7 @@ import tables
 import pandas as pd
 import scipy.sparse
 import os
+import scipy.sparse as sp_sparse
 
 
 class H5toCSV:
@@ -216,9 +217,13 @@ def tabular_read_in(path):
         tabular = tabular.astype(np.float32)
     elif path.split('.')[-1] == 'csv':
         tabular = pd.read_csv(path, index_col=0)
-        tabular = tabular.values.T.astype(np.float32)
+        tabular = tabular.values.T
         
     elif path.split('.')[-1] == 'txt':
-        tabular = np.loadtxt(path)
+        tabular = np.loadtxt(path, dtype=np.float32)
+    elif path.split('.')[-1] == 'npz':
+        cm = sp_sparse.load_npz(path)
+        tabular = np.array(cm.todense()).astype(np.float32)
+        
     return tabular
     

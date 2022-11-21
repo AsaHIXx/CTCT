@@ -14,7 +14,7 @@ def ExpWeight(step, gamma=3, max_iter=5000, reverse=False):
 
 class Trainer(BaseTrainer):
 
-    # 迭代优化步骤
+    # iteration process
     def iter(self, i_iter):
         """
         iteration step
@@ -51,29 +51,7 @@ class Trainer(BaseTrainer):
             loss = recon_loss + kl_div
         loss = s_loss
         loss.backward()
-        # if self.warmup and i_iter + 1 <= self.config.warmup_steps:
-        #     loss = recon_loss + kl_div
-        #     loss.backward()
-        #     try:
-        #         t_batch = next(self.t_loader_tmp)
-        #     except StopIteration:
-        #         _, self.t_loader_tmp = init_pair_dataset(self.config, source_data=self.source_exp_data,
-        #                                                  target_data=self.target_exp_data,
-        #                                                  source_label=self.label_for_source,
-        #                                                  target_label=self.target_label_data)
-        #         t_batch = next(self.t_loader_tmp)
-        #     _, t_batch = t_batch
-        #     t_img, t_label = t_batch
-        #     t_label = t_label.cuda()
-        #     t_img = t_img.cuda()
-        #     t_label = t_label.view(-1).cuda()
-        #     t_pred, t_feat, _, t_prob, t_recon_loss, t_kl_div, t_mmd_loss = self.model(
-        #         t_img.cuda().float())
-        #     target_vae_loss = t_recon_loss + t_kl_div
-        #     target_vae_loss.backward()
-        # else:
-        #     loss = s_loss
-        #     loss.backward()
+        
         if i_iter + 1 <= self.config.warmup_steps and self.warmup:
             print('source_loss', loss)
 
@@ -93,14 +71,9 @@ class Trainer(BaseTrainer):
         s_img = s_img.unsqueeze(2)
         t_img = t_img.unsqueeze(2)
         t_img = t_img.unsqueeze(2)
-        # n, k, c, h, w = s_img.shape
-        # s_img = s_img.cuda().view(-1, c, h, w)
-        # t_img = t_img.cuda().view(-1, c, h, w)
         n, k, c, h, w = s_img.shape
         s_img = s_img.cuda().view(-1, c, h, w)
         t_img = t_img.cuda().view(-1, c, h, w)
-        # s_img = s_img.cuda()
-        # t_img = t_img.cuda()
         t_img = t_img.to(torch.float32)
         s_label = s_label.cuda().view(-1)
         _, s_neck, s_prob, s_af_softmax, _, _, _ = self.model(s_img.float().squeeze(1).squeeze(1))
@@ -108,9 +81,6 @@ class Trainer(BaseTrainer):
 
         counter = torch.ones(self.config.num_sample) * self.config.num_pclass
         counter = counter.long().tolist()
-        # print('s_prob', s_prob.shape)
-        # s_prob = s_prob.squeeze(1)
-        print('s_neck, t_neck, counter', s_neck.shape, t_neck.shape, counter)
         cdd_loss = self.cdd.forward([s_neck], [t_neck], counter, counter)['cdd']
         if self.config.onehot:
             s_loss = -torch.sum(softmax_res * s_label) / s_label.size(0)
@@ -132,7 +102,6 @@ class Trainer(BaseTrainer):
             t_batch = next(self.t_loader)
 
         _, t_batch = t_batch
-        # t_img, t_label, _, _ = t_batch
         t_img, t_label, _, _ = t_batch
         t_label = t_label.cuda()
         t_img = t_img.unsqueeze(2)
@@ -150,8 +119,6 @@ class Trainer(BaseTrainer):
         if self.config.expweight:
             en_loss_t = en_loss * ExpWeight(i_iter + self.config.reproduce_iter, gamma=self.config.gm,
                                             max_iter=self.config.max_iter_num)
-        # if i_iter > 10000:
-        #     en_loss_t = en_loss
         self.losses.entropy_loss = en_loss_t
         self.losses.total_loss = en_loss_t + loss
         self.s_loss_epoch = self.s_loss_epoch + s_loss
@@ -182,25 +149,11 @@ class Trainer(BaseTrainer):
             losses = self.iter(i_iter)
             if i_iter % self.config.print_freq == 0:
                 self.print_loss(i_iter)
-
-            # if i_iter % self.config.save_freq == 0:
-            #
-            #     self.save_model(iter=i_iter)
-            #     print('model for iter_{} saved !! '.format(i_iter))
             if not self.warmup or i_iter + 1 >= self.config.warmup_steps:
                 if (i_iter + 1) % self.config.stage_size == 0:
                     self.class_set = self.re_clustering(i_iter)
             
                 self.validate(i_iter + 1, self.class_set)
-                # if i_iter == 3500:
-                # if self.acc_result >= 0.95 and self.acc_test_result >= 0.90:
-                #     # if i_iter + 1 > 1000:
-                #     self.save_model(iter=i_iter + 1, info=str(round(float(self.acc_result), 2)) + '_test_' + str(
-                #         round(float(self.acc_test_result), 2)) + '_best_model_checkPoint')
-                    # self.config.lr = self.config.lr/10
-                    
-                
-                #     # self.config.lr = self.config.lr/10
                 self.writer.add_scalar('val/acc', self.acc_result, self.iter_num)
                 if (i_iter + 1) % self.print_freq_epoch == 0:
                     self.validate(i_iter + 1, self.class_set)
