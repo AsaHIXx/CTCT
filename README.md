@@ -17,7 +17,7 @@ pip install -r requirements.txt
 
 ## DEMO
 - simple demos can be found in **./Demo.ipynb**
-- if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`); and a h5 file process scripts can be found in `utils/h5_data_preprocessing.py`
+- if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`).
 
 ## Data preprocessing
 
