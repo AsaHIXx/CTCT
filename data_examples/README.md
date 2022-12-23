@@ -1,4 +1,4 @@
-**CTC_pub_train_372_exp.txt** logtpm input matrix for training, corresponding label reference **CTC_public_372_train_serial.txt**
+**CTC_pub_train_372_exp.txt** logtpm input matrix for training, corresponding label reference **CTC_public_372_train_label.txt**
 
 - - -
 **gene_ensemble_188556.txt** Gene ensemble id involved in this study
@@ -7,7 +7,7 @@
 - - -
 **nature_306_brca_logtpm.csv** logtpm input matrix for nature(2022), corresponding label reference **nature_306_ref_label.txt**
 - - -
-**CTC_pub_test_377_exp.txt** input matrix for test, **CTC_public_377_test_serial.txt** corresponding label reference
+**CTC_pub_test_451_exp.txt** input matrix for test, **CTC_public_451_test_label.txt** corresponding label reference
 - - -
 **source_ident_52505.txt** label reference for source tumor data involved in this study.
 - - -

@@ -1,7 +1,32 @@
 
 ## code for **Deep transfer learning enables lesion tracing of circulating tumor cells(CTC-Tracer)**
+## Introduction
+Liquid biopsy offers great promise for noninvasive cancer diagnostics, while
+the lack of adequate target characterization and analysis hinders its wide
+application. Single-cell RNA sequencing (scRNA-seq) is a powerful technology
+for cell characterization. Integrating scRNA-seq into a CTC-focused liquid
+biopsy study can perhaps classify CTCs by their original lesions. However, the
+lack of CTC scRNA-seq data accumulation and prior knowledge hinders further
+development. Therefore, we design CTC-Tracer, a transfer learning-based
+algorithm, to correct the distributional shift between primary cancer cells and
+CTCs to transfer lesion labels from the primary cancer cell atlas to CTCs. The
+robustness and accuracy of CTC-Tracer are validated by 8 individual standard
+datasets. We apply CTC-Tracer on a complex dataset consisting of RNA-seq
+profiles of single CTCs, CTC clusters froma BRCA patient, and two xenografts,
+and demonstrate that CTC-Tracer has potential in knowledge transfer between
+different types of RNA-seq data of lesions and CTCs.
 
+## Datasets
+`Source datasets`: sparse_50318_for_26types.npz(primary tumors with 26 cell types, can be downloaded from `http://117.25.169.110:1032/`) \
+`Target datasets`: data_examples/CTC_pub_train_372_exp.txt(CTCs with four cell types); data_examples/nature_306_brca_logtpm.csv(Complex CTCs with one cell type); 
 
+## Transfer tasks
+ - 1.Primary Tumors(26 types) -> CTCs(4 types)
+ > source(sparse_50318_for_26types.npz) | target(data_examples/CTC_pub_train_372_exp.txt)
+ - 2.Primary Tumors with blood cells(2 types) -> CTCs with blood cells(2 types)
+ > source(sparse_50318_for_26types.npz+blood_datasets) | target(data_examples/CTC_pub_train_372_exp.txt+blood_datasets)
+ - 3.Primary Tumors(26 types) -> complex CTCs(1 types)(pre-trained model from Transfer task1)
+ > source(sparse_50318_for_26types.npz) | target(data_examples/nature_306_brca_logtpm.csv)
 ## Prerequisites
 
 To install requirements:
@@ -15,7 +40,7 @@ pip install -r requirements.txt
 - Pytorch 1.11.0
 - Any Computer with a GPU
 
-## DEMO
+## Demo
 - simple demos can be found in **./Demo.ipynb**
 - if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`).
 
@@ -67,3 +92,17 @@ Fill the parameters in `config/vis.yaml` and just run `python Visualization.py`.
 ## License
 This project is licensed under the MIT license.
 - - -
+## Citation
+f you are using this code for your own researching, please consider citing
+```
+@article{guo2022deep,
+  title={Deep transfer learning enables lesion tracing of circulating tumor cells},
+  author={Guo, Xiaoxu and Lin, Fanghe and Yi, Chuanyou and Song, Juan and Sun, Di and Lin, Li and Zhong, Zhixing and Wu, Zhaorun and Wang, Xiaoyu and Zhang, Yingkun and others},
+  journal={Nature Communications},
+  volume={13},
+  number={1},
+  pages={1--14},
+  year={2022},
+  publisher={Nature Publishing Group}
+}
+```
