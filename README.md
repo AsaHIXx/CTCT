@@ -17,16 +17,17 @@ and demonstrate that CTC-Tracer has potential in knowledge transfer between
 different types of RNA-seq data of lesions and CTCs.
 
 ## Datasets
-`Source datasets`: sparse_50318_for_26types.npz(primary tumors with 26 cell types, can be downloaded from `http://117.25.169.110:1032/`) \
-`Target datasets`: data_examples/CTC_pub_train_372_exp.txt(CTCs with four cell types); data_examples/nature_306_brca_logtpm.csv(Complex CTCs with one cell type); 
+`Source datasets`: sparse_50318_for_26types.npz (primary tumors with 26 cell types, can be downloaded from `http://117.25.169.110:1032/`) \
+`Target datasets`: data_examples/CTC_pub_train_372_exp.txt (CTCs with four cell types); data_examples/nature_306_brca_logtpm.csv(Complex CTCs with one cell type); 
 
-## Transfer tasks
- - 1.Primary Tumors(26 types) -> CTCs(4 types)
- > source(sparse_50318_for_26types.npz) | target(data_examples/CTC_pub_train_372_exp.txt)
- - 2.Primary Tumors with blood cells(2 types) -> CTCs with blood cells(2 types)
- > source(sparse_50318_for_26types.npz+blood_datasets) | target(data_examples/CTC_pub_train_372_exp.txt+blood_datasets)
- - 3.Primary Tumors(26 types) -> complex CTCs(1 types)(pre-trained model from Transfer task1)
- > source(sparse_50318_for_26types.npz) | target(data_examples/nature_306_brca_logtpm.csv)
+## Transfer learning tasks
+ - 1.Primary Tumors (26 types) -> CTCs (4 types)
+ > source (sparse_50318_for_26types.npz) | target (data_examples/CTC_pub_train_372_exp.txt)
+ - 2.Primary Tumors with blood cells (2 types) -> CTCs with blood cells (2 types)
+ > source (sparse_50318_for_26types.npz+blood_datasets) | target (data_examples/CTC_pub_train_372_exp.txt+blood_datasets)
+ - 3.Primary Tumors (26 types) -> complex CTCs (1 types)(pre-trained model from Transfer task1)
+ > source (sparse_50318_for_26types.npz) | target(data_examples/nature_306_brca_logtpm.csv)
+`type represents the class`
 ## Prerequisites
 
 To install requirements:
