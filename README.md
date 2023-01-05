@@ -24,7 +24,7 @@ different types of RNA-seq data of lesions and CTCs.
  - 1.Primary Tumors (26 types) -> CTCs (4 types)
  > source (sparse_50318_for_26types.npz) | target (data_examples/CTC_pub_train_372_exp.txt)
  - 2.Primary Tumors with blood cells (2 types) -> CTCs with blood cells (2 types)
- > source (sparse_50318_for_26types.npz+PBMC_datasets) | target (data_examples/CTC_pub_train_372_exp.txt (Cell type:CTC) +PBMC_datasets (Cell type:PBMC))
+ > source (sparse_50318_for_26types.npz) | target (data_examples/CTC_pub_train_372_exp.txt (Cell type:CTC) +PBMC_datasets (Cell type:PBMC))
  - 3.Primary Tumors (26 types) -> complex CTCs (1 types)(pre-trained model from Transfer task1)
  > source (sparse_50318_for_26types.npz) | target
  (data_examples/nature_306_brca_logtpm.csv) \
