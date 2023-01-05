@@ -11,7 +11,9 @@ Liquid biopsy offers great promise for noninvasive cancer diagnostics, while the
 1. data_examples/CTC_pub_train_372_exp.txt (CTCs with four cell types);
 2. data_examples/nature_306_brca_logtpm.csv(Complex CTCs with one cell type);
 3. data_examples/PBMC_logtpm_400cells.csv (400 PBMC cells);
-
+### cell type involved in source domains
+![](./fig/fig1.png "cell types")
+> In transfer learning tasks 2, the PBMC served as an individual class, and the other else 25 type served as an unique class.
 ## Transfer learning tasks
  - 1.Primary Tumors (26 types) -> CTCs (4 types)
  > source (sparse_50318_for_26types.npz) | target (data_examples/CTC_pub_train_372_exp.txt)
