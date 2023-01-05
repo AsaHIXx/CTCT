@@ -18,16 +18,18 @@ different types of RNA-seq data of lesions and CTCs.
 
 ## Datasets
 `Source datasets`: sparse_50318_for_26types.npz (primary tumors with 26 cell types, can be downloaded from `http://117.25.169.110:1032/`) \
-`Target datasets`: data_examples/CTC_pub_train_372_exp.txt (CTCs with four cell types); data_examples/nature_306_brca_logtpm.csv(Complex CTCs with one cell type); 
+`Target datasets`: data_examples/CTC_pub_train_372_exp.txt (CTCs with four cell types); data_examples/nature_306_brca_logtpm.csv(Complex CTCs with one cell type); data_examples/PBMC_logtpm_400cells.csv(400 PBMC cells);
 
 ## Transfer learning tasks
  - 1.Primary Tumors (26 types) -> CTCs (4 types)
  > source (sparse_50318_for_26types.npz) | target (data_examples/CTC_pub_train_372_exp.txt)
  - 2.Primary Tumors with blood cells (2 types) -> CTCs with blood cells (2 types)
- > source (sparse_50318_for_26types.npz+blood_datasets) | target (data_examples/CTC_pub_train_372_exp.txt+blood_datasets)
+ > source (sparse_50318_for_26types.npz+PBMC_datasets) | target (data_examples/CTC_pub_train_372_exp.txt (Cell type:CTC) +PBMC_datasets (Cell type:PBMC))
  - 3.Primary Tumors (26 types) -> complex CTCs (1 types)(pre-trained model from Transfer task1)
- > source (sparse_50318_for_26types.npz) | target(data_examples/nature_306_brca_logtpm.csv)
-`type represents the class`
+ > source (sparse_50318_for_26types.npz) | target
+ (data_examples/nature_306_brca_logtpm.csv) \
+
+- `type represents the class`
 ## Prerequisites
 
 To install requirements:
@@ -46,6 +48,9 @@ pip install -r requirements.txt
 - if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`).
 
 ## Data preprocessing
+we supply scripts for preprocessing of the raw data. 
+
+
 
 input tabular data structure: 
 ```
@@ -94,11 +99,11 @@ Fill the parameters in `config/vis.yaml` and just run `python Visualization.py`.
 This project is licensed under the MIT license.
 - - -
 ## Citation
-f you are using this code for your own researching, please consider citing
+If you are using this code for your own researching, please consider citing
 ```
 @article{guo2022deep,
   title={Deep transfer learning enables lesion tracing of circulating tumor cells},
-  author={Guo, Xiaoxu and Lin, Fanghe and Yi, Chuanyou and Song, Juan and Sun, Di and Lin, Li and Zhong, Zhixing and Wu, Zhaorun and Wang, Xiaoyu and Zhang, Yingkun and others},
+  author={Guo, Xiaoxu and Lin, Fanghe and Yi, Chuanyou and Song, Juan and Sun, Di and Lin, Li and Zhong, Zhixing and Wu, Zhaorun and Wang, Xiaoyu and Zhang, Yingkun and Li, Jin and Zhang, Huimin and Liu, Feng and Yang, Chaoyong and Song, Jia},
   journal={Nature Communications},
   volume={13},
   number={1},
