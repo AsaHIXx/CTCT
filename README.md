@@ -1,24 +1,16 @@
 
-## code for **Deep transfer learning enables lesion tracing of circulating tumor cells(CTC-Tracer)**
+## Code for **Deep transfer learning enables lesion tracing of circulating tumor cells (CTC-Tracer)**
 ## Introduction
-Liquid biopsy offers great promise for noninvasive cancer diagnostics, while
-the lack of adequate target characterization and analysis hinders its wide
-application. Single-cell RNA sequencing (scRNA-seq) is a powerful technology
-for cell characterization. Integrating scRNA-seq into a CTC-focused liquid
-biopsy study can perhaps classify CTCs by their original lesions. However, the
-lack of CTC scRNA-seq data accumulation and prior knowledge hinders further
-development. Therefore, we design CTC-Tracer, a transfer learning-based
-algorithm, to correct the distributional shift between primary cancer cells and
-CTCs to transfer lesion labels from the primary cancer cell atlas to CTCs. The
-robustness and accuracy of CTC-Tracer are validated by 8 individual standard
-datasets. We apply CTC-Tracer on a complex dataset consisting of RNA-seq
-profiles of single CTCs, CTC clusters froma BRCA patient, and two xenografts,
-and demonstrate that CTC-Tracer has potential in knowledge transfer between
-different types of RNA-seq data of lesions and CTCs.
+Liquid biopsy offers great promise for noninvasive cancer diagnostics, while the lack of adequate target characterization and analysis hinders its wide application. Single-cell RNA sequencing (scRNA-seq) is a powerful technology for cell characterization. Integrating scRNA-seq into a CTC-focused liquid biopsy study can perhaps classify CTCs by their original lesions. However, the lack of CTC scRNA-seq data accumulation and prior knowledge hinders further development. Therefore, we design CTC-Tracer, a transfer learning-based algorithm, to correct the distributional shift between primary cancer cells and CTCs to transfer lesion labels from the primary cancer cell atlas to CTCs. The robustness and accuracy of CTC-Tracer are validated by 8 individual standard datasets. We apply CTC-Tracer on a complex dataset consisting of RNA-seq profiles of single CTCs, CTC clusters froma BRCA patient, and two xenografts, and demonstrate that CTC-Tracer has potential in knowledge transfer between different types of RNA-seq data of lesions and CTCs.
 
 ## Datasets
-`Source datasets`: sparse_50318_for_26types.npz (primary tumors with 26 cell types, can be downloaded from `http://117.25.169.110:1032/`) \
-`Target datasets`: data_examples/CTC_pub_train_372_exp.txt (CTCs with four cell types); data_examples/nature_306_brca_logtpm.csv(Complex CTCs with one cell type); data_examples/PBMC_logtpm_400cells.csv(400 PBMC cells);
+### Datasets used in source domains:
+1. sparse_50318_for_26types.npz (primary tumors with 26 cell types, can be searched and downloaded from `http://117.25.169.110:1032/`);
+2. PBMC_datasets: data_examples/PBMC_logtpm_400cells.csv (400 PBMC cells)
+### Datasets used in target domains:
+1. data_examples/CTC_pub_train_372_exp.txt (CTCs with four cell types);
+2. data_examples/nature_306_brca_logtpm.csv(Complex CTCs with one cell type);
+3. data_examples/PBMC_logtpm_400cells.csv (400 PBMC cells);
 
 ## Transfer learning tasks
  - 1.Primary Tumors (26 types) -> CTCs (4 types)
