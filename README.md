@@ -14,11 +14,11 @@ Liquid biopsy offers great promise for noninvasive cancer diagnostics, while the
 ![](./fig/fig1.png "cell types")
 > Note that, in the second transfer learning task (shown below), the PBMC served as an individual class, and the other 25 types served as an unique class.
 ## Transfer learning tasks
- - 1. Primary Tumors (26 types) -> CTCs (4 types)
+1. Primary Tumors (26 types) -> CTCs (4 types)
  > source (sparse_50318_for_26types.npz) | target (data_examples/CTC_pub_train_372_exp.txt)
- - 2. Primary Tumors with blood cells (2 types) -> CTCs with blood cells (2 types)
+2. Primary Tumors with blood cells (2 types) -> CTCs with blood cells (2 types)
  > source (sparse_50318_for_26types.npz) | target (data_examples/CTC_pub_train_372_exp.txt (Cell type:CTC) +PBMC_datasets (Cell type:PBMC)) | Note that: PBMC as one class and the other types as another class.
- - 3. Primary Tumors (26 types) -> complex CTCs (1 types) (using the pre-trained model from the first Transfer task)
+3. Primary Tumors (26 types) -> complex CTCs (1 types) (using the pre-trained model from the first Transfer task)
  > source (sparse_50318_for_26types.npz) | target
  (data_examples/nature_306_brca_logtpm.csv) \
 
