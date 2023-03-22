@@ -116,11 +116,11 @@ if __name__ == '__main__':
         config = yaml.load(f, Loader=yaml.FullLoader)
     f.close()
     config = easy_dic(config)
-    config.input_data = args.input_file_path
-    config.tumor_info = args.tumor_info
-    config.ref_label = args.ref_label
-    config.class_out = args.class_out
-    config.pretrained_model = args.model
+    # config.input_data = args.input_file_path
+    # config.tumor_info = args.tumor_info
+    # config.ref_label = args.ref_label
+    # config.class_out = args.class_out
+    # config.pretrained_model = args.model
     path = config.log + time_str + '/'
     mkdir(path)
     input_file_path = config.input_data
