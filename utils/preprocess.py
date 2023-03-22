@@ -48,7 +48,7 @@ if __name__ == '__main__':
     symbol = args.symbol
     if args.mode == 'ensemble':
         exp_logtpm = log_exp(args.file, ensemble)
-        exp_logtpm.to_csv(args.savepath+filename+'logtpm.csv')
+        exp_logtpm.to_csv(args.save_path+filename+'logtpm.csv')
     else:
         exp_logtpm = log_exp(args.file, symbol)
-        exp_logtpm.to_csv(args.savepath+filename+'logtpm.csv')
+        exp_logtpm.to_csv(args.save_path+filename+'logtpm.csv')
