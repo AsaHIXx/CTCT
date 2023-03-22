@@ -28,12 +28,12 @@ library(org.Hs.eg.db)
 s2g <- toTable(org.Hs.egSYMBOL)
 s2e <- toTable(org.Hs.egENSEMBL)
 head(s2e)
-g_l_temp <- merge(g_l, s2e, by='gene_id')   
-g_l_temp <- g_l_temp[!duplicated(g_l_temp$ensembl_id),]
+g_l_temp <- merge(g_l, s2g, by='gene_id')   
+g_l_temp <- g_l_temp[!duplicated(g_l_temp$symbol_id),]
 head(g_l_temp)
 rownames(g_l_temp) <- g_l_temp [,3]
 a <- read.table(command$input)
-ng <- intersect(rownames(a), g_l_temp$ensembl_id)   
+ng <- intersect(rownames(a), g_l_temp$symbol_id)   
 exprSet <- a[ng, ]         
 expr1 = exprSet/g_l_temp[ng, ]$length
 tpm = t(t(expr1/colSums(expr1))) * 10^6

@@ -41,9 +41,14 @@ if __name__ == '__main__':
     parser.add_argument('--symbol', type=str, default='./data_examples/gene_hygo_18856.txt')
     parser.add_argument('--file', type=str, default='')
     parser.add_argument('--save_path', type=str, default='./data_examples/')
+    parser.add_argument('--mode', type=str, default='symbol')
     args = parser.parse_args()
     filename = (args.file.split('/')[-1]).split('.')[0]
     ensemble = args.ensemble
     symbol = args.symbol
-    exp_logtpm = log_exp(args.file)
-    exp_logtpm.to_csv(args.savepath+filename+'logtpm.csv')
+    if args.mode == 'ensemble':
+        exp_logtpm = log_exp(args.file, ensemble)
+        exp_logtpm.to_csv(args.savepath+filename+'logtpm.csv')
+    else:
+        exp_logtpm = log_exp(args.file, symbol)
+        exp_logtpm.to_csv(args.savepath+filename+'logtpm.csv')
