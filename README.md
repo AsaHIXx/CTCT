@@ -5,7 +5,7 @@ Liquid biopsy offers great promise for noninvasive cancer diagnostics, while the
 
 ## Datasets
 ### Datasets used in source domains:
-1. sparse_50318_for_26types.npz (primary tumors with 26 cell types, can be searched and downloaded from `http://117.25.169.110:1032/`);
+1. sparse_50318_for_26types.npz (primary tumors with 26 cell types, can be searched and downloaded from `http://117.25.169.110:1032/`)`simply click the search button, and the file will be displayed. :)`;
 ### Datasets used in target domains:
 1. data_examples/CTC_pub_train_372_exp.txt (CTCs with four cell types);
 2. data_examples/nature_306_brca_logtpm.csv (Complex CTCs with one cell type);
@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ## Demo
 - simple demos can be found in **./Demo.ipynb**
-- if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`,simply click the search button, and the file will be displayed. :) ).
+- if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`)`simply click the search button, and the file will be displayed. :)`.
 
 ## Data preprocessing
 we supply scripts for preprocessing of the raw data. 
