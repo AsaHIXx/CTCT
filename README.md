@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ## Demo
 - simple demos can be found in **./Demo.ipynb**
-- if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`).
+- if you want to reproduce training process, you need to download the source dataset used in this study(sparse_50318_for_26types.npz) from the website(`http://117.25.169.110:1032/`,simply click the search button, and the file will be displayed. :) ).
 
 ## Data preprocessing
 we supply scripts for preprocessing of the raw data. 
